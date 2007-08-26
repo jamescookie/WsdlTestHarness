@@ -1,0 +1,16 @@
+<project name="jetty" default="deploy.jetty">
+    <import file="build.xml"/>    
+
+    <target name="define.jetty">
+        <path id="jetty.plugin.classpath">
+            <fileset dir="jetty" includes="*.jar"/>
+        </path>
+        <taskdef classpathref="jetty.plugin.classpath" resource="tasks.properties" loaderref="jetty.loader" />
+    </target>
+
+    <target name="deploy.jetty" depends="build.all,define.jetty">
+        <jetty tempDirectory="jetty-temp">
+            <webApp name="wsdl" warfile="${war.file}" contextpath="/wsdl"/>
+        </jetty>
+    </target>
+</project>

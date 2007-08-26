@@ -1,0 +1,59 @@
+<project name="codegen" default="compile.wsdl.stubs">
+
+    <import file="build.xml"/>
+
+    <target name="define.taskdefs">
+        <path id="axis.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <path location="build"/>
+        </path>
+
+        <taskdef resource="axis-tasks.properties" classpathref="axis.classpath"/>
+        <taskdef classname="org.apache.axis.tools.ant.wsdl.Wsdl2javaAntTask" name="wsdl2java">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </taskdef>
+    </target>
+
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <macrodef name="generate-wsdl-stubs">
+        <attribute name="serviceName"/>
+        <attribute name="output" default="src/java"/>
+        <attribute name="package"/>
+        <attribute name="wsdl"/>
+        <sequential>
+            <wsdl2java url="@{wsdl}" serverside="yes" output="@{output}" deployScope="application"/>
+        </sequential>
+    </macrodef>
+
+    <target name="generate-wsdl-codegen" depends="define.taskdefs" description="Turn WSDL files into stub code">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${build.dir}/com/wsdl">
+                <include name="*.java"/>
+                <include name="*.wsdd"/>
+            </fileset>
+        </delete>
+        <generate-wsdl-stubs serviceName="webservice"
+                             output="${build.dir}"
+                             wsdl="${build.dir}/wsdl.wsdl"
+                             package="com/wsdl"/>
+
+    </target>
+
+
+    <target name="compile.wsdl.stubs" depends="generate-wsdl-codegen">
+        <javac srcdir="${build.dir}" destdir="${build.dir}">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+</project>

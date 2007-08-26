@@ -1,0 +1,38 @@
+<project default="deploy">
+
+    <property name="lib.dir" value="lib"/>
+    <property name="build.dir" value="build"/>
+    <property name="war.file" value="${build.dir}/wsdl.war"/>
+    <property name="path" value="/wsdl"/>
+    <property name="host" value="www.jamescookie.com"/>
+
+    <path id="classpath.full">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <import file="resourceResolve.xml"/>
+    <import file="tomcat.xml"/>
+    <import file="jetty.xml"/>
+
+    <!--<target name="build.all" depends="clean, resolve">-->
+    <target name="build.all" depends="clean">
+        <property name="compiled" value="${build.dir}/classes"/>
+        <mkdir dir="${compiled}"/>
+        <javac srcdir="src" destdir="${compiled}" debug="true" classpathref="classpath.full" />
+        <war destfile="${war.file}" webxml="WEB-INF/web.xml">
+            <fileset dir="resources"/>
+            <lib dir="${lib.dir}"/>
+            <classes dir="${compiled}"/>
+            <webinf dir="WEB-INF"/>
+        </war>
+    </target>
+
+    <target name="deploy" depends="build.all">
+        <tomcat.deploy path="${path}" war="${war.file}" host="${host}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}" failonerror="true"/>
+        <delete dir="jetty-temp" failonerror="true"/>
+    </target>
+</project>

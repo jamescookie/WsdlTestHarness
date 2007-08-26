@@ -1,0 +1,68 @@
+package com.aol.wsdl;
+
+import org.apache.struts2.interceptor.ParameterAware;
+
+import java.util.Map;
+
+public class ExecuteOperationAction extends CommonAction implements ParameterAware {
+    private String operation;
+    private Map requestParameters;
+    private String result;
+    private FieldDescriptor fieldDescriptor;
+
+
+    public FieldDescriptor getFieldDescriptor() {
+        return fieldDescriptor;
+    }
+
+    public void setFieldDescriptor(FieldDescriptor fieldDescriptor) {
+        this.fieldDescriptor = fieldDescriptor;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String execute() throws Exception {
+        ServiceLocator serviceLocator = getServiceLocator();
+        fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
+        getValues(fieldDescriptor);
+        setResult(serviceLocator.invoke(operation, fieldDescriptor));
+
+        return SUCCESS;
+    }
+
+    void getValues(FieldDescriptor fieldDescriptor) {
+        for (FieldDescriptor descriptor : fieldDescriptor) {
+            if (descriptor.isPrimitive()) {
+                descriptor.setValue(getRequestParameter(descriptor));
+            } else {
+                getValues(descriptor);
+            }
+        }
+    }
+
+    private String getRequestParameter(FieldDescriptor descriptor) {
+        String[] strings = ((String[]) requestParameters.get(descriptor.getFormName()));
+        if (strings == null || strings.length == 0) {
+            return null;
+        }
+        return strings[0];
+    }
+
+    public void setParameters(Map map) {
+        requestParameters = map;
+    }
+}

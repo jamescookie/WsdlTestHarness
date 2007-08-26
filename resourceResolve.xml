@@ -1,0 +1,12 @@
+<project default="resolve" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <target name="ivy-configure" unless="ivy.configured">
+        <echo message="Configuring Ivy"/>
+        <ivy:configure file="config.ivy.xml" />
+    </target>
+
+    <target name="resolve" depends="ivy-configure" description="--> retreive dependencies with ivy">
+        <echo message="Resolving dependencies"/>
+        <ivy:retrieve pattern="[conf]/[artifact].[ext]"/>
+    </target>
+</project>

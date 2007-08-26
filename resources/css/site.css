@@ -1,0 +1,123 @@
+body, div, table, td, p {
+    font: 11px Lucida Grande, Verdana, Arial, Helvetica, sans serif;
+}
+
+body {
+    margin-top: 0;
+    margin-right: 10px;
+    margin-bottom: 70px;
+    margin-left: 10px;
+    background-color: #fff;
+}
+
+form, div {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.log {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.shortText {
+    width: 300px;
+}
+
+.dateTimeInput {
+    width: 110px;
+}
+
+.dateInput {
+    width: 75px;
+}
+
+img {
+    border: 0;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header {
+    background-color: #e7effc;
+    margin-bottom: 8px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: -1px
+}
+
+.header td {
+    color: #0000C0;
+}
+
+.header-title {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.header-version {
+    font-size: 9px;
+    font-weight: lighter;
+}
+
+table.data {
+    border-collapse: collapse;
+    border: 1px solid #666666;
+}
+
+table.data tr.colourRow {
+    background-color: #ebf3ff;
+}
+
+table.data thead th {
+    font-size: 105%;
+    color: #FFFFFF;
+    background-color: #080;
+    text-align: left;
+}
+
+table.data tr {
+    vertical-align: middle;
+}
+
+table.data tr, th, td {
+    /*#padding: .75em;*/
+}
+
+table td {
+    padding-right:10px;
+    padding-bottom:0px;
+    padding-top:0px;
+}
+
+table tr {
+    padding-bottom:0px;
+    padding-top:0px;
+}
+
+.imageButton {
+    cursor: pointer;
+    margin: 0;
+    padding: 2px;
+    padding-left:3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #C8C6B7 #808080 #808080 #C8C6B7;
+    vertical-align: bottom;
+}
+
+.error {
+    color: red;
+}
+
+.formTr {
+    border-bottom: 1px solid darkgray;
+}
+
+.actionButton {
+    width: 70px;
+}

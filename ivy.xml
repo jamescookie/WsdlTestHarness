@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ivy-module version="2.0">
+    <info organisation="AOL Broadband" module="wdsl-test-harness"/>
+    <configurations>
+        <conf name="buildlib" description="Build time dependencies"/>
+        <conf name="lib" description="Runtime dependencies"/>
+        <conf name="jetty" description="Jetty dependencies"/>
+    </configurations>
+    <dependencies>
+        <!--runtime-->
+        <dependency org="axis" name="axis-ant" rev="1.4" conf="lib->default"/>
+        <dependency org="axis" name="axis" rev="1.4" conf="lib->default"/>
+        <dependency org="commons-lang" name="commons-lang" rev="2.3" conf="lib->default"/>
+        <dependency org="jdom" name="jdom" rev="1.0" conf="lib->default"/>
+        <dependency org="org.apache.struts" name="struts2-core" rev="2.0.9" conf="lib->default"/>
+        <dependency org="org.apache.struts" name="struts2-sitemesh-plugin" rev="2.0.9" conf="lib->default"/>
+        <dependency org="jaxen" name="jaxen" rev="full" conf="lib->default"/>
+        <dependency org="velocity-tools" name="velocity-tools" rev="1.2" conf="lib->default"/>
+        <dependency org="velocity" name="velocity" rev="1.4" conf="lib->default"/>
+        <dependency org="xalan" name="xalan" rev="2.7.0" conf="lib->default"/>
+
+        <!--buildtime-->
+        <dependency org="easymock" name="easymock" rev="2.0" conf="buildlib->default"/>
+        <dependency org="org.easymock" name="easymockclassextension" rev="2.2" conf="buildlib->default"/>
+        <dependency org="junit" name="junit" rev="4.3" conf="buildlib->default"/>
+
+        <!--jetty-->
+        <!--<dependency org="org.mortbay.jetty" name="jetty" rev="6.1.5" conf="jetty->default"/>-->
+        <!--<dependency org="org.mortbay.jetty" name="jsp-2.1" rev="6.1.5" conf="jetty->default"/>-->
+        <!--<dependency org="org.eclipse.jdt" name="core" rev="3.1.1" conf="jetty->default"/>-->
+
+    </dependencies>
+</ivy-module>
