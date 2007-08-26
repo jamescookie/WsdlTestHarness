@@ -9,7 +9,7 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
     private Map requestParameters;
     private String result;
     private FieldDescriptor fieldDescriptor;
-
+    private Exception exception;
 
     public FieldDescriptor getFieldDescriptor() {
         return fieldDescriptor;
@@ -35,11 +35,23 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
         this.result = result;
     }
 
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
     public String execute() throws Exception {
         ServiceLocator serviceLocator = getServiceLocator();
         fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
         getValues(fieldDescriptor);
-        setResult(serviceLocator.invoke(operation, fieldDescriptor));
+        try {
+            setResult(serviceLocator.invoke(operation, fieldDescriptor));
+        } catch (Exception e) {
+            setException(e);
+        }
 
         return SUCCESS;
     }

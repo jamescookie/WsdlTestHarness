@@ -10,7 +10,14 @@ import org.apache.axis.message.RPCElement;
 import org.apache.axis.message.RPCParam;
 import org.apache.axis.message.SOAPEnvelope;
 import org.apache.axis.wsdl.gen.Parser;
-import org.apache.axis.wsdl.symbolTable.*;
+import org.apache.axis.wsdl.symbolTable.BindingEntry;
+import org.apache.axis.wsdl.symbolTable.Parameter;
+import org.apache.axis.wsdl.symbolTable.Parameters;
+import org.apache.axis.wsdl.symbolTable.ServiceEntry;
+import org.apache.axis.wsdl.symbolTable.SymTabEntry;
+import org.apache.axis.wsdl.symbolTable.SymbolTable;
+import org.apache.axis.wsdl.symbolTable.TypeEntry;
+import org.jdom.JDOMException;
 import org.jdom.input.DOMBuilder;
 import org.w3c.dom.Element;
 
@@ -21,14 +28,18 @@ import javax.wsdl.Service;
 import javax.wsdl.extensions.soap.SOAPAddress;
 import javax.xml.namespace.QName;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class ServiceLocator {
     private org.apache.axis.client.Service service;
     private Port port;
     private BindingEntry bindingEntry;
     private Parser wsdlParser = null;
-    private static final String DEFAULT_WSDL = "http://localhost:7001/webreg/services/CPWRetailService?wsdl";
 
     public ServiceLocator(String url) {
         init(url);
@@ -89,34 +100,29 @@ public class ServiceLocator {
         }
     }
 
-    public String invoke(String operationName, FieldDescriptor fieldDescriptors) {
-        try {
-            Operation operation = findOperation(operationName);
-            String portName = port.getName();
-            Call call = (Call) service.createCall(QName.valueOf(portName), QName.valueOf(operation.getName()));
-            call.setTimeout(15 * 1000);
-            call.setProperty(ElementDeserializer.DESERIALIZE_CURRENT_ELEMENT, Boolean.TRUE);
+    public String invoke(String operationName, FieldDescriptor fieldDescriptors) throws Exception {
+        Operation operation = findOperation(operationName);
+        String portName = port.getName();
+        Call call = (Call) service.createCall(QName.valueOf(portName), QName.valueOf(operation.getName()));
+        call.setTimeout(15 * 1000);
+        call.setProperty(ElementDeserializer.DESERIALIZE_CURRENT_ELEMENT, Boolean.TRUE);
 
-            StringWriter stringWriter = new StringWriter();
-            SerializationContext context = new SerializationContext(stringWriter, null);
-            context.setSendDecl(false);
+        StringWriter stringWriter = new StringWriter();
+        SerializationContext context = new SerializationContext(stringWriter, null);
+        context.setSendDecl(false);
 
-            for (FieldDescriptor fieldDescriptor : fieldDescriptors) {
-                fieldDescriptor.serialize(context);
-            }
-
-            RPCParam rpcParam = new MyRPCParam(stringWriter.toString());
-            QName operationQName = call.getOperationName();
-            RPCElement body = new RPCElement(operationQName.getNamespaceURI(), operationQName.getLocalPart(), new Object[]{rpcParam});
-
-            return invoke(body, call);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+        for (FieldDescriptor fieldDescriptor : fieldDescriptors) {
+            fieldDescriptor.serialize(context);
         }
+
+        RPCParam rpcParam = new MyRPCParam(stringWriter.toString());
+        QName operationQName = call.getOperationName();
+        RPCElement body = new RPCElement(operationQName.getNamespaceURI(), operationQName.getLocalPart(), new Object[]{rpcParam});
+
+        return invoke(body, call);
     }
 
-    private String invoke(RPCElement body, Call call) throws Exception {
+    private String invoke(RPCElement body, Call call) throws AxisFault, JDOMException {
         MessageContext msgContext = call.getMessageContext();
         SOAPEnvelope reqEnv =
                 new SOAPEnvelope(msgContext.getSOAPConstants(),

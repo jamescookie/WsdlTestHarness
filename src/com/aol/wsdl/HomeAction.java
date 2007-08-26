@@ -1,5 +1,7 @@
 package com.aol.wsdl;
 
+import freemarker.log.Logger;
+
 import java.net.URL;
 
 public class HomeAction extends CommonAction {
@@ -15,11 +17,10 @@ public class HomeAction extends CommonAction {
     }
 
     public String execute() throws Exception {
+        Logger.selectLoggerLibrary(Logger.LIBRARY_NONE);
         clearWsdl();
         return INPUT;
     }
-
-    
 
     public String doWsdl() {
         error = "";
@@ -43,7 +44,6 @@ public class HomeAction extends CommonAction {
             map.put(SERVICE_LOCATOR, serviceLocator);
             return SUCCESS;
         }
-
     }
 
     public String getError() {
