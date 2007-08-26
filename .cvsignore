@@ -4,4 +4,5 @@ buildlib
 jetty
 jetty-temp
 lib
+exploded
 *.iws

@@ -1,7 +1,7 @@
 package com.aol.wsdl;
 
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.HashMap;
 
@@ -9,7 +9,7 @@ public class ExecuteOperationActionTest {
 
     @Test
     public void shouldCallSimpleWSDLMethod() throws Exception {
-        ServiceLocator serviceLocator = new ServiceLocator();
+        ServiceLocator serviceLocator = new ServiceLocator("test");
         String operation = "getAvailability";
         FieldDescriptor fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
         ExecuteOperationAction action = new ExecuteOperationAction();

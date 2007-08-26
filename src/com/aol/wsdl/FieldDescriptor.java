@@ -79,6 +79,11 @@ public class FieldDescriptor extends ArrayList<FieldDescriptor> {
 
     public void setJavaType(String javaTypeName) throws ClassNotFoundException {
         javaTypeName = new String(new char[]{javaTypeName.charAt(0)}).toUpperCase() + javaTypeName.substring(1);
+        if ("Int".equals(javaTypeName)) {
+            javaTypeName = "Integer";
+        } else if ("Char".equals(javaTypeName)) {
+            javaTypeName = "Character";
+        }
         this.javaType = Class.forName("java.lang." + javaTypeName);
     }
 

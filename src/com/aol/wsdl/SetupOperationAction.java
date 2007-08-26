@@ -51,7 +51,6 @@ public class SetupOperationAction extends CommonAction {
         return SUCCESS;
     }
 
-
     public List getParameters() throws ClassNotFoundException {
         if (fieldDescriptor == null) {
             ServiceLocator serviceLocator = (ServiceLocator) map.get(SERVICE_LOCATOR);
