@@ -47,10 +47,12 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
         ServiceLocator serviceLocator = getServiceLocator();
         fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
         getValues(fieldDescriptor);
-        try {
-            setResult(serviceLocator.invoke(operation, fieldDescriptor));
-        } catch (Exception e) {
-            setException(e);
+        if (fieldDescriptor.isValid()) {
+            try {
+                setResult(serviceLocator.invoke(operation, fieldDescriptor));
+            } catch (Exception e) {
+                setException(e);
+            }
         }
 
         return SUCCESS;

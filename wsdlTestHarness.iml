@@ -21,6 +21,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/buildlib/junit.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/j2ee.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -130,15 +139,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jdom.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/buildlib/junit.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

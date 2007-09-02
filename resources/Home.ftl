@@ -18,6 +18,7 @@
             For example: (note: there are still bugs in this software!)
         </p>
         <p>
+            http://s3.amazonaws.com/doc/2006-03-01/AmazonS3.wsdl<br/>
             http://api.google.com/GoogleSearch.wsdl<br/>
             http://www.ghettodriveby.com/soap/?wsdl<br/>
             http://saintbook.org/MightyMaxims/MightyMaxims.asmx?WSDL<br/>
