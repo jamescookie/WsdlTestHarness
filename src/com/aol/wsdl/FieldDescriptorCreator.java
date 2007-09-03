@@ -1,5 +1,6 @@
 package com.aol.wsdl;
 
+import org.apache.axis.wsdl.symbolTable.CollectionType;
 import org.apache.axis.wsdl.symbolTable.ElementDecl;
 import org.apache.axis.wsdl.symbolTable.Parameter;
 import org.apache.axis.wsdl.symbolTable.TypeEntry;
@@ -35,17 +36,13 @@ public class FieldDescriptorCreator {
             String localPart = qName.getLocalPart();
             localPart = localPart.substring(localPart.lastIndexOf('>') + 1, localPart.length());
             FieldDescriptor innerDescriptor;
-            if (containedElement.getType().isBaseType()) {
-                innerDescriptor = createFieldDescriptor(
-                        nameUpToNow,
-                        containedElement.getType(),
-                        localPart,
-                        qName,
-                        descriptor.getDepth() + 1);
+            TypeEntry containedTypeEntry = containedElement.getType();
+            if (containedTypeEntry instanceof CollectionType) {
+                innerDescriptor = createCollection(containedTypeEntry);
             } else {
                 innerDescriptor = createFieldDescriptor(
                         nameUpToNow,
-                        containedElement.getType(),
+                        containedTypeEntry,
                         localPart,
                         qName,
                         descriptor.getDepth() + 1);
@@ -54,5 +51,8 @@ public class FieldDescriptorCreator {
         }
     }
 
+    private static FieldDescriptor createCollection(TypeEntry typeEntry) {
+        return null;
+    }
 
 }

@@ -19,6 +19,7 @@ public class ServiceLocatorTest {
         List<String> names = serviceLocator.getOperationNames();
         Assert.assertEquals(15, names.size());
         for (String name : names) {
+            System.out.println("name = " + name);
             serviceLocator.createOperationParameters(name);
         }
     }
