@@ -8,6 +8,19 @@ import javax.xml.namespace.QName;
 import java.util.Vector;
 
 public class FieldDescriptorCreator {
+    static FieldDescriptor createFieldDescriptors(Vector<Parameter> list) throws ClassNotFoundException {
+        FieldDescriptor returnParameters = new FieldDescriptor(false, null, null, null, 0, null);
+        for (Parameter parameter : list) {
+            TypeEntry paramType = parameter.getType();
+            if (paramType.isBaseType()) {
+                returnParameters.add(createSimpleType(parameter, ""));
+            } else {
+                returnParameters.add(createComplexType(null, "", paramType, parameter.getName(), paramType.getQName()));
+            }
+        }
+        return returnParameters;
+    }
+
     static FieldDescriptor createComplexType(Parameter parameter, String nameUpToNow, TypeEntry typeEntry, String name, QName qName) throws ClassNotFoundException {
         FieldDescriptor descriptor = new FieldDescriptor();
         descriptor.setName(name);
@@ -71,6 +84,9 @@ public class FieldDescriptorCreator {
                 parameter,
                 true,
                 0,
-                parameter.getType().getQName().getLocalPart());
+                parameter.getType().getQName().getLocalPart()
+        );
     }
+
+
 }

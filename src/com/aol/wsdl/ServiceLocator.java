@@ -11,12 +11,10 @@ import org.apache.axis.message.RPCParam;
 import org.apache.axis.message.SOAPEnvelope;
 import org.apache.axis.wsdl.gen.Parser;
 import org.apache.axis.wsdl.symbolTable.BindingEntry;
-import org.apache.axis.wsdl.symbolTable.Parameter;
 import org.apache.axis.wsdl.symbolTable.Parameters;
 import org.apache.axis.wsdl.symbolTable.ServiceEntry;
 import org.apache.axis.wsdl.symbolTable.SymTabEntry;
 import org.apache.axis.wsdl.symbolTable.SymbolTable;
-import org.apache.axis.wsdl.symbolTable.TypeEntry;
 import org.jdom.JDOMException;
 import org.jdom.input.DOMBuilder;
 import org.w3c.dom.Element;
@@ -165,20 +163,10 @@ public class ServiceLocator {
     }
 
     public FieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
-        FieldDescriptor returnParameters = new FieldDescriptor();
         Operation operation = findOperation(operationName);
         Parameters parameters = (Parameters) bindingEntry.getParameters().get(operation);
-        Vector list = parameters.list;
-        for (Object param : list) {
-            Parameter parameter = (Parameter) param;
-            TypeEntry paramType = parameter.getType();
-            if (paramType.isBaseType()) {
-                returnParameters.add(FieldDescriptorCreator.createSimpleType(parameter, ""));
-            } else {
-                returnParameters.add(FieldDescriptorCreator.createComplexType(parameter, "", paramType, parameter.getName(), paramType.getQName()));
-            }
-        }
-        return returnParameters;
+        //noinspection unchecked
+        return FieldDescriptorCreator.createFieldDescriptors(parameters.list);
     }
 
     private Port selectPort(Map ports, String portName) throws Exception {
