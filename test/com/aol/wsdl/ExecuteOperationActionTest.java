@@ -10,8 +10,8 @@ public class ExecuteOperationActionTest {
     @Test
     public void shouldSetValuesCorrectly() throws Exception {
         String formName = "dslNumber";
-        FieldDescriptor fieldDescriptor = new FieldDescriptor(true, null, null, formName, 0, "string");
-        FieldDescriptor parameter = new FieldDescriptor(false, null, null, null, 0, null);
+        SimpleFieldDescriptor fieldDescriptor = new SimpleFieldDescriptor(null, formName, 0, null, "string");
+        ComplexFieldDescriptor parameter = new ComplexFieldDescriptor(null, null, 0, null);
         parameter.add(fieldDescriptor);
 
         ExecuteOperationAction action = new ExecuteOperationAction();
@@ -20,7 +20,7 @@ public class ExecuteOperationActionTest {
         map.put(formName, new String[] {value});
         action.setParameters(map);
 
-        action.getValues(parameter);
+        action.setValues(parameter);
 
         Assert.assertEquals(value, parameter.get(0).getValue());
     }

@@ -98,7 +98,7 @@ public class ServiceLocator {
         }
     }
 
-    public String invoke(String operationName, FieldDescriptor fieldDescriptors) throws Exception {
+    public String invoke(String operationName, ComplexFieldDescriptor fieldDescriptors) throws Exception {
         Operation operation = findOperation(operationName);
         String portName = port.getName();
         Call call = (Call) service.createCall(QName.valueOf(portName), QName.valueOf(operation.getName()));
@@ -162,7 +162,7 @@ public class ServiceLocator {
         return operation;
     }
 
-    public FieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
+    public ComplexFieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
         Operation operation = findOperation(operationName);
         Parameters parameters = (Parameters) bindingEntry.getParameters().get(operation);
         //noinspection unchecked

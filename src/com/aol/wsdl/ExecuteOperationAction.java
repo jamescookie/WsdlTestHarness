@@ -8,14 +8,14 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
     private String operation;
     private Map requestParameters;
     private String result;
-    private FieldDescriptor fieldDescriptor;
+    private ComplexFieldDescriptor fieldDescriptor;
     private Exception exception;
 
-    public FieldDescriptor getFieldDescriptor() {
+    public ComplexFieldDescriptor getFieldDescriptor() {
         return fieldDescriptor;
     }
 
-    public void setFieldDescriptor(FieldDescriptor fieldDescriptor) {
+    public void setFieldDescriptor(ComplexFieldDescriptor fieldDescriptor) {
         this.fieldDescriptor = fieldDescriptor;
     }
 
@@ -46,7 +46,7 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
     public String execute() throws Exception {
         ServiceLocator serviceLocator = getServiceLocator();
         fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
-        getValues(fieldDescriptor);
+        setValues(fieldDescriptor);
         if (fieldDescriptor.isValid()) {
             try {
                 setResult(serviceLocator.invoke(operation, fieldDescriptor));
@@ -58,12 +58,12 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
         return SUCCESS;
     }
 
-    void getValues(FieldDescriptor fieldDescriptor) {
+    void setValues(ComplexFieldDescriptor fieldDescriptor) {
         for (FieldDescriptor descriptor : fieldDescriptor) {
             if (descriptor.isPrimitive()) {
                 descriptor.setValue(getRequestParameter(descriptor));
             } else {
-                getValues(descriptor);
+                setValues((ComplexFieldDescriptor) descriptor);
             }
         }
     }

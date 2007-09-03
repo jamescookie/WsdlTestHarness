@@ -4,14 +4,14 @@ import java.util.List;
 
 public class SetupOperationAction extends CommonAction {
     private String result = null;
-    private FieldDescriptor fieldDescriptor;
+    private ComplexFieldDescriptor fieldDescriptor;
     private Exception exception;
 
-    public FieldDescriptor getFieldDescriptor() {
+    public ComplexFieldDescriptor getFieldDescriptor() {
         return fieldDescriptor;
     }
 
-    public void setFieldDescriptor(FieldDescriptor fieldDescriptor) {
+    public void setFieldDescriptor(ComplexFieldDescriptor fieldDescriptor) {
         this.fieldDescriptor = fieldDescriptor;
     }
 

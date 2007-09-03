@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FieldDescriptorTest {
-    private FieldDescriptor descriptor;
+    private SimpleFieldDescriptor descriptor;
 
     @Before
     public void setup() throws Exception {
-        descriptor = new FieldDescriptor(true, null, null, null, 0, "string");
+        descriptor = new SimpleFieldDescriptor(null, null, 0, null, "string");
     }
 
     @Test
@@ -45,20 +45,20 @@ public class FieldDescriptorTest {
 
     @Test
     public void shouldCheckForComplexTypes() throws Exception {
-        descriptor = new FieldDescriptor(false, null, null, null, 0, null);
-        FieldDescriptor fd1 = new FieldDescriptor(true, null, null, null, 0, "string");
+        ComplexFieldDescriptor descriptor = new ComplexFieldDescriptor(null, null, 0, null);
+        SimpleFieldDescriptor fd1 = new SimpleFieldDescriptor(null, null, 0, null, "string");
         checkValidType(fd1, "string", "hello");
         descriptor.add(fd1);
         Assert.assertTrue(descriptor.isValid());
     }
 
-    private void checkValidType(FieldDescriptor descriptor, String javaTypeName, String value) throws ClassNotFoundException {
+    private void checkValidType(SimpleFieldDescriptor descriptor, String javaTypeName, String value) throws ClassNotFoundException {
         descriptor.setJavaType(javaTypeName);
         descriptor.setValue(value);
         Assert.assertTrue(descriptor.isValid());
     }
 
-    private void checkInvalidType(FieldDescriptor descriptor, String javaTypeName, String value) throws ClassNotFoundException {
+    private void checkInvalidType(SimpleFieldDescriptor descriptor, String javaTypeName, String value) throws ClassNotFoundException {
         descriptor.setJavaType(javaTypeName);
         descriptor.setValue(value);
         Assert.assertFalse(descriptor.isValid());

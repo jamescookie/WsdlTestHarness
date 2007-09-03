@@ -13,7 +13,7 @@ public class FunctionalTest {
         List<String> names = serviceLocator.getOperationNames();
         Assert.assertEquals(4, names.size());
         for (String name : names) {
-            FieldDescriptor descriptor = serviceLocator.createFieldDescriptor(name);
+            ComplexFieldDescriptor descriptor = serviceLocator.createFieldDescriptor(name);
             descriptor.get(0).setValue("6");
             descriptor.get(1).setValue("3");
             String s = serviceLocator.invoke(name, descriptor);
