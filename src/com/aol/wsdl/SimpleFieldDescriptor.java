@@ -9,10 +9,10 @@ import java.util.Map;
 
 class SimpleFieldDescriptor implements FieldDescriptor {
     private Class javaType;
-    protected final String name;
-    protected final int depth;
-    protected final String formName;
-    protected final QName qname;
+    private final String name;
+    private final int depth;
+    private final String formName;
+    private final QName qname;
     private String value;
     private String validationMessage = "";
 
