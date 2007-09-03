@@ -37,20 +37,18 @@ public class FieldDescriptorCreator {
             FieldDescriptor innerDescriptor;
             if (containedElement.getType().isBaseType()) {
                 innerDescriptor = createFieldDescriptor(
+                        nameUpToNow,
+                        containedElement.getType(),
                         localPart,
                         qName,
-                        nameUpToNow + localPart,
-                        true,
-                        descriptor.getDepth() + 1,
-                        containedElement.getType().getQName().getLocalPart()
-                );
+                        descriptor.getDepth() + 1);
             } else {
                 innerDescriptor = createFieldDescriptor(
                         nameUpToNow + localPart + ".",
                         containedElement.getType(),
                         localPart,
-                        qName, 0
-                );
+                        qName,
+                        descriptor.getDepth() + 1);
             }
             descriptor.add(innerDescriptor);
         }
