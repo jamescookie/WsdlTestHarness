@@ -1,5 +1,7 @@
-package com.aol.wsdl;
+package com.aol.wsdl.actions;
 
+import com.aol.wsdl.ComplexFieldDescriptor;
+import com.aol.wsdl.SimpleFieldDescriptor;
 import org.junit.Assert;
 import org.junit.Test;
 

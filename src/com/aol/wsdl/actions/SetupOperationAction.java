@@ -1,4 +1,7 @@
-package com.aol.wsdl;
+package com.aol.wsdl.actions;
+
+import com.aol.wsdl.ComplexFieldDescriptor;
+import com.aol.wsdl.ServiceLocator;
 
 import java.util.List;
 

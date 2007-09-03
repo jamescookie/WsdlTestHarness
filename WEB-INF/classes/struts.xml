@@ -3,18 +3,18 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
     <package name="wsdl" extends="struts-default">
-        <action name="DisplayOperations" class="com.aol.wsdl.DisplayOperationsAction">
+        <action name="DisplayOperations" class="com.aol.wsdl.actions.DisplayOperationsAction">
             <result name="input" type="freemarker">/Operations.ftl</result>
             <result name="success" type="chain">SetupOperation</result>
         </action>
-        <action name="SetupOperation" class="com.aol.wsdl.SetupOperationAction">
+        <action name="SetupOperation" class="com.aol.wsdl.actions.SetupOperationAction">
             <result name="input" type="freemarker">/Operation.ftl</result>
             <result name="success" type="chain">ExecuteOperation</result>
         </action>
-        <action name="ExecuteOperation" class="com.aol.wsdl.ExecuteOperationAction">
+        <action name="ExecuteOperation" class="com.aol.wsdl.actions.ExecuteOperationAction">
             <result name="success" type="chain">SetupOperation</result>
         </action>
-        <action name="Home" class="com.aol.wsdl.HomeAction">
+        <action name="Home" class="com.aol.wsdl.actions.HomeAction">
             <result name="input" type="freemarker">/Home.ftl</result>
             <result name="success" type="chain">DisplayOperations</result>
         </action>

@@ -1,5 +1,6 @@
-package com.aol.wsdl;
+package com.aol.wsdl.actions;
 
+import com.aol.wsdl.ServiceLocator;
 import freemarker.log.Logger;
 
 import java.net.URL;

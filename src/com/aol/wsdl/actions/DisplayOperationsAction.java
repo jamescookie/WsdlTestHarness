@@ -1,4 +1,4 @@
-package com.aol.wsdl;
+package com.aol.wsdl.actions;
 
 import java.util.List;
 

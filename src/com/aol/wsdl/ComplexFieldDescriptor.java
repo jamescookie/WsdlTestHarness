@@ -4,9 +4,8 @@ import org.apache.axis.encoding.SerializationContext;
 
 import javax.xml.namespace.QName;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class ComplexFieldDescriptor extends ArrayList<FieldDescriptor> implements FieldDescriptor {
+public class ComplexFieldDescriptor extends OperationParameters implements FieldDescriptor {
     protected final String name;
     protected final int depth;
     protected final String formName;
@@ -56,16 +55,6 @@ public class ComplexFieldDescriptor extends ArrayList<FieldDescriptor> implement
         }
 
         context.endElement();
-    }
-
-    public boolean isValid() {
-        boolean retValue = true;
-        for (FieldDescriptor child : this) {
-            if (!child.isValid()) {
-                retValue = false;
-            }
-        }
-        return retValue;
     }
 
 }

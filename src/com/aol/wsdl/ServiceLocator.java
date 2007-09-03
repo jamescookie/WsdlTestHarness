@@ -120,6 +120,13 @@ public class ServiceLocator {
         return invoke(body, call);
     }
 
+    public ComplexFieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
+        Operation operation = findOperation(operationName);
+        Parameters parameters = (Parameters) bindingEntry.getParameters().get(operation);
+        //noinspection unchecked
+        return FieldDescriptorCreator.createFieldDescriptors(parameters.list);
+    }
+
     private String invoke(RPCElement body, Call call) throws AxisFault, JDOMException {
         MessageContext msgContext = call.getMessageContext();
         SOAPEnvelope reqEnv =
@@ -160,13 +167,6 @@ public class ServiceLocator {
             }
         }
         return operation;
-    }
-
-    public ComplexFieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
-        Operation operation = findOperation(operationName);
-        Parameters parameters = (Parameters) bindingEntry.getParameters().get(operation);
-        //noinspection unchecked
-        return FieldDescriptorCreator.createFieldDescriptors(parameters.list);
     }
 
     private Port selectPort(Map ports, String portName) throws Exception {

@@ -1,5 +1,6 @@
-package com.aol.wsdl;
+package com.aol.wsdl.actions;
 
+import com.aol.wsdl.ServiceLocator;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.SessionAware;
 

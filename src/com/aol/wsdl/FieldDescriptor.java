@@ -1,11 +1,8 @@
 package com.aol.wsdl;
 
-import org.apache.axis.encoding.SerializationContext;
-
 import javax.xml.namespace.QName;
-import java.io.IOException;
 
-public interface FieldDescriptor {
+public interface FieldDescriptor extends Parameters {
     String getName();
 
     boolean isPrimitive();
@@ -20,7 +17,4 @@ public interface FieldDescriptor {
 
     QName getQname();
 
-    void serialize(SerializationContext context) throws IOException;
-
-    boolean isValid();
 }
