@@ -1,7 +1,6 @@
 package com.aol.wsdl;
 
 import org.apache.axis.encoding.SerializationContext;
-import org.apache.axis.wsdl.symbolTable.Parameter;
 
 import javax.xml.namespace.QName;
 import java.io.IOException;
@@ -9,19 +8,14 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class FieldDescriptor extends ArrayList<FieldDescriptor> {
+    private final boolean primitive;
+    private final String name;
+    private final int depth;
+    private final String formName;
+    private final QName qname;
     private Class javaType;
-    private String name;
-    private int depth = 0;
-    private boolean primitive;
-    private Parameter parameter;
     private String value;
-    private String formName;
-    private QName qname;
     private String validationMessage = "";
-
-    @Deprecated
-    public FieldDescriptor() {
-    }
 
     public FieldDescriptor(boolean primitive, QName qname, String name, String formName, int depth, String javaType) throws ClassNotFoundException {
         this.primitive = primitive;
@@ -38,32 +32,12 @@ public class FieldDescriptor extends ArrayList<FieldDescriptor> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isPrimitive() {
         return primitive;
     }
 
     public int getDepth() {
         return depth;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
-    public void setPrimitive(boolean primitive) {
-        this.primitive = primitive;
-    }
-
-    public void setParameter(Parameter parameter) {
-        this.parameter = parameter;
-    }
-
-    public Parameter getParameter() {
-        return parameter;
     }
 
     public String getValue() {
@@ -76,14 +50,6 @@ public class FieldDescriptor extends ArrayList<FieldDescriptor> {
 
     public String getFormName() {
         return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
-    public void setQName(QName qname) {
-        this.qname = qname;
     }
 
     public QName getQname() {

@@ -11,19 +11,19 @@ public class FieldDescriptorCreator {
     static FieldDescriptor createFieldDescriptors(Vector<Parameter> list) throws ClassNotFoundException {
         FieldDescriptor returnParameters = new FieldDescriptor(false, null, null, null, 0, null);
         for (Parameter parameter : list) {
-            TypeEntry paramType = parameter.getType();
-            if (paramType.isBaseType()) {
-                returnParameters.add(createSimpleType("", paramType, parameter.getName(), parameter.getQName()));
-            } else {
-                returnParameters.add(createComplexType("", paramType, parameter.getName(), paramType.getQName()));
-            }
+            returnParameters.add(createFieldDescriptor("", parameter.getType(), parameter.getName(), parameter.getQName(), 0));
         }
         return returnParameters;
     }
 
-    static FieldDescriptor createComplexType(String nameUpToNow, TypeEntry typeEntry, String name, QName qName) throws ClassNotFoundException {
-        FieldDescriptor descriptor = new FieldDescriptor(false, qName, name, nameUpToNow + name, 0, null);
-        addFieldDescriptors(typeEntry, descriptor, descriptor.getFormName() + ".");
+    static FieldDescriptor createFieldDescriptor(String nameUpToNow, TypeEntry typeEntry, String name, QName qName, int depth) throws ClassNotFoundException {
+        FieldDescriptor descriptor;
+        if (typeEntry.isBaseType()) {
+            descriptor = createFieldDescriptor(name, qName, nameUpToNow + name, typeEntry.isBaseType(), depth, typeEntry.getQName().getLocalPart());
+        } else {
+            descriptor = createFieldDescriptor(name, qName, nameUpToNow + name, typeEntry.isBaseType(), depth, null);
+            addFieldDescriptors(typeEntry, descriptor, descriptor.getFormName() + ".");
+        }
         return descriptor;
     }
 
@@ -45,11 +45,11 @@ public class FieldDescriptorCreator {
                         containedElement.getType().getQName().getLocalPart()
                 );
             } else {
-                innerDescriptor = createComplexType(
+                innerDescriptor = createFieldDescriptor(
                         nameUpToNow + localPart + ".",
                         containedElement.getType(),
                         localPart,
-                        qName
+                        qName, 0
                 );
             }
             descriptor.add(innerDescriptor);
@@ -60,16 +60,6 @@ public class FieldDescriptorCreator {
         return new FieldDescriptor(primitive, qname, name, formName, depth, javaType);
     }
 
-    static FieldDescriptor createSimpleType(String nameUpToNow, TypeEntry typeEntry, String name, QName qName) throws ClassNotFoundException {
-        return createFieldDescriptor(
-                name,
-                qName,
-                nameUpToNow + name,
-                true,
-                0,
-                typeEntry.getQName().getLocalPart()
-        );
-    }
 
 
 }
