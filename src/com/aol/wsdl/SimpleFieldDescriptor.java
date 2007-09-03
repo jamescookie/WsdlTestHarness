@@ -5,8 +5,9 @@ import org.apache.axis.encoding.SerializationContext;
 import javax.xml.namespace.QName;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.Map;
 
-public class SimpleFieldDescriptor implements FieldDescriptor {
+class SimpleFieldDescriptor implements FieldDescriptor {
     private Class javaType;
     protected final String name;
     protected final int depth;
@@ -39,7 +40,7 @@ public class SimpleFieldDescriptor implements FieldDescriptor {
         return value == null ? "" : value;
     }
 
-    public void setValue(String value) {
+    void setValue(String value) {
         this.value = value;
     }
 
@@ -78,6 +79,18 @@ public class SimpleFieldDescriptor implements FieldDescriptor {
             return;
         }
         this.javaType = Class.forName("java.lang." + javaTypeName);
+    }
+
+    public void setValues(Map<String, String[]> map) {
+        setValue(getRequestParameter(map, getFormName()));
+    }
+
+    private String getRequestParameter(Map<String, String[]> map, String formName) {
+        String[] strings = map.get(formName);
+        if (strings == null || strings.length == 0) {
+            return null;
+        }
+        return strings[0];
     }
 
     public void serialize(SerializationContext context) throws IOException {

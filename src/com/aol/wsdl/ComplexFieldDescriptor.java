@@ -5,7 +5,7 @@ import org.apache.axis.encoding.SerializationContext;
 import javax.xml.namespace.QName;
 import java.io.IOException;
 
-public class ComplexFieldDescriptor extends OperationParameters implements FieldDescriptor {
+class ComplexFieldDescriptor extends OperationParameters implements FieldDescriptor {
     protected final String name;
     protected final int depth;
     protected final String formName;
@@ -32,10 +32,6 @@ public class ComplexFieldDescriptor extends OperationParameters implements Field
 
     public String getValue() {
         return null;
-    }
-
-    public void setValue(String value) {
-        //do nothing
     }
 
     public String getFormName() {

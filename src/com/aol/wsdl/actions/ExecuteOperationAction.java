@@ -1,7 +1,5 @@
 package com.aol.wsdl.actions;
 
-import com.aol.wsdl.ComplexFieldDescriptor;
-import com.aol.wsdl.FieldDescriptor;
 import com.aol.wsdl.OperationParameters;
 import com.aol.wsdl.ServiceLocator;
 import org.apache.struts2.interceptor.ParameterAware;
@@ -50,7 +48,8 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
     public String execute() throws Exception {
         ServiceLocator serviceLocator = getServiceLocator();
         operationParameters = serviceLocator.createOperationParameters(operation);
-        setValues(operationParameters);
+        //noinspection unchecked
+        operationParameters.setValues(requestParameters);
         if (operationParameters.isValid()) {
             try {
                 setResult(serviceLocator.invoke(operation, operationParameters));
@@ -60,24 +59,6 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
         }
 
         return SUCCESS;
-    }
-
-    void setValues(OperationParameters operationParameters) {
-        for (FieldDescriptor descriptor : operationParameters) {
-            if (descriptor.isPrimitive()) {
-                descriptor.setValue(getRequestParameter(descriptor));
-            } else {
-                setValues((ComplexFieldDescriptor) descriptor);
-            }
-        }
-    }
-
-    private String getRequestParameter(FieldDescriptor descriptor) {
-        String[] strings = ((String[]) requestParameters.get(descriptor.getFormName()));
-        if (strings == null || strings.length == 0) {
-            return null;
-        }
-        return strings[0];
     }
 
     public void setParameters(Map map) {

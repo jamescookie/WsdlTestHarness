@@ -2,7 +2,7 @@ package com.aol.wsdl;
 
 import javax.xml.namespace.QName;
 
-public interface FieldDescriptor extends Parameters {
+interface FieldDescriptor extends Parameters {
     String getName();
 
     boolean isPrimitive();
@@ -11,10 +11,7 @@ public interface FieldDescriptor extends Parameters {
 
     String getValue();
 
-    void setValue(String value);
-
     String getFormName();
 
     QName getQname();
-
 }

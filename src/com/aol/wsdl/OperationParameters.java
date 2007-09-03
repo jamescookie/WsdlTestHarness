@@ -4,6 +4,7 @@ import org.apache.axis.encoding.SerializationContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class OperationParameters extends ArrayList<FieldDescriptor> implements Parameters {
 
@@ -21,6 +22,12 @@ public class OperationParameters extends ArrayList<FieldDescriptor> implements P
             }
         }
         return retValue;
+    }
+
+    public void setValues(Map<String, String[]> requestParameters) {
+        for (FieldDescriptor descriptor : this) {
+            descriptor.setValues(requestParameters);
+        }
     }
 
 }

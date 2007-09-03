@@ -3,7 +3,9 @@ package com.aol.wsdl;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FunctionalTest {
 
@@ -14,8 +16,10 @@ public class FunctionalTest {
         Assert.assertEquals(4, names.size());
         for (String name : names) {
             OperationParameters parameters = serviceLocator.createOperationParameters(name);
-            parameters.get(0).setValue("6");
-            parameters.get(1).setValue("3");
+            Map<String,String[]> map = new HashMap<String, String[]>();
+            map.put("A", new String[] {"6"});
+            map.put("B", new String[] {"3"});
+            parameters.setValues(map);
             String s = serviceLocator.invoke(name, parameters);
             if (name.equalsIgnoreCase("add")) {
                 Assert.assertTrue(s.contains("9"));
