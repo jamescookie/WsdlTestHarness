@@ -98,7 +98,7 @@ public class ServiceLocator {
         }
     }
 
-    public String invoke(String operationName, ComplexFieldDescriptor fieldDescriptors) throws Exception {
+    public String invoke(String operationName, OperationParameters operationParameters) throws Exception {
         Operation operation = findOperation(operationName);
         String portName = port.getName();
         Call call = (Call) service.createCall(QName.valueOf(portName), QName.valueOf(operation.getName()));
@@ -109,9 +109,7 @@ public class ServiceLocator {
         SerializationContext context = new SerializationContext(stringWriter, null);
         context.setSendDecl(false);
 
-        for (FieldDescriptor fieldDescriptor : fieldDescriptors) {
-            fieldDescriptor.serialize(context);
-        }
+        operationParameters.serialize(context);
 
         RPCParam rpcParam = new MyRPCParam(stringWriter.toString());
         QName operationQName = call.getOperationName();
@@ -120,11 +118,11 @@ public class ServiceLocator {
         return invoke(body, call);
     }
 
-    public ComplexFieldDescriptor createFieldDescriptor(String operationName) throws ClassNotFoundException {
+    public OperationParameters createOperationParameters(String operationName) throws ClassNotFoundException {
         Operation operation = findOperation(operationName);
         Parameters parameters = (Parameters) bindingEntry.getParameters().get(operation);
         //noinspection unchecked
-        return FieldDescriptorCreator.createFieldDescriptors(parameters.list);
+        return FieldDescriptorCreator.createOperationParameters(parameters.list);
     }
 
     private String invoke(RPCElement body, Call call) throws AxisFault, JDOMException {

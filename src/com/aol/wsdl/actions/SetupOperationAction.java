@@ -1,21 +1,21 @@
 package com.aol.wsdl.actions;
 
-import com.aol.wsdl.ComplexFieldDescriptor;
+import com.aol.wsdl.OperationParameters;
 import com.aol.wsdl.ServiceLocator;
 
 import java.util.List;
 
 public class SetupOperationAction extends CommonAction {
     private String result = null;
-    private ComplexFieldDescriptor fieldDescriptor;
+    private OperationParameters operationParameters;
     private Exception exception;
 
-    public ComplexFieldDescriptor getFieldDescriptor() {
-        return fieldDescriptor;
+    public OperationParameters getOperationParameters() {
+        return operationParameters;
     }
 
-    public void setFieldDescriptor(ComplexFieldDescriptor fieldDescriptor) {
-        this.fieldDescriptor = fieldDescriptor;
+    public void setOperationParameters(OperationParameters operationParameters) {
+        this.operationParameters = operationParameters;
     }
 
     public String getResult() {
@@ -55,12 +55,12 @@ public class SetupOperationAction extends CommonAction {
     }
 
     public List getParameters() throws ClassNotFoundException {
-        if (fieldDescriptor == null) {
+        if (operationParameters == null) {
             ServiceLocator serviceLocator = (ServiceLocator) map.get(SERVICE_LOCATOR);
-            fieldDescriptor = serviceLocator.createFieldDescriptor((String) map.get(OPERATION));
+            operationParameters = serviceLocator.createOperationParameters((String) map.get(OPERATION));
         }
 
-        return fieldDescriptor;
+        return operationParameters;
     }
 
 }

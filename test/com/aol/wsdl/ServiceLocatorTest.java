@@ -19,12 +19,12 @@ public class ServiceLocatorTest {
         List<String> names = serviceLocator.getOperationNames();
         Assert.assertEquals(15, names.size());
         for (String name : names) {
-            serviceLocator.createFieldDescriptor(name);
+            serviceLocator.createOperationParameters(name);
         }
     }
 
     @Test
     public void shouldBeAbleToHandleCollections() throws Exception {
-        serviceLocator.createFieldDescriptor("CreateBucket");
+        serviceLocator.createOperationParameters("CreateBucket");
     }
 }

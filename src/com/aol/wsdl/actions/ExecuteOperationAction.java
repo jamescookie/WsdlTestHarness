@@ -2,6 +2,7 @@ package com.aol.wsdl.actions;
 
 import com.aol.wsdl.ComplexFieldDescriptor;
 import com.aol.wsdl.FieldDescriptor;
+import com.aol.wsdl.OperationParameters;
 import com.aol.wsdl.ServiceLocator;
 import org.apache.struts2.interceptor.ParameterAware;
 
@@ -11,15 +12,15 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
     private String operation;
     private Map requestParameters;
     private String result;
-    private ComplexFieldDescriptor fieldDescriptor;
+    private OperationParameters operationParameters;
     private Exception exception;
 
-    public ComplexFieldDescriptor getFieldDescriptor() {
-        return fieldDescriptor;
+    public OperationParameters getOperationParameters() {
+        return operationParameters;
     }
 
-    public void setFieldDescriptor(ComplexFieldDescriptor fieldDescriptor) {
-        this.fieldDescriptor = fieldDescriptor;
+    public void setOperationParameters(OperationParameters operationParameters) {
+        this.operationParameters = operationParameters;
     }
 
     public String getOperation() {
@@ -48,11 +49,11 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
 
     public String execute() throws Exception {
         ServiceLocator serviceLocator = getServiceLocator();
-        fieldDescriptor = serviceLocator.createFieldDescriptor(operation);
-        setValues(fieldDescriptor);
-        if (fieldDescriptor.isValid()) {
+        operationParameters = serviceLocator.createOperationParameters(operation);
+        setValues(operationParameters);
+        if (operationParameters.isValid()) {
             try {
-                setResult(serviceLocator.invoke(operation, fieldDescriptor));
+                setResult(serviceLocator.invoke(operation, operationParameters));
             } catch (Exception e) {
                 setException(e);
             }
@@ -61,8 +62,8 @@ public class ExecuteOperationAction extends CommonAction implements ParameterAwa
         return SUCCESS;
     }
 
-    void setValues(ComplexFieldDescriptor fieldDescriptor) {
-        for (FieldDescriptor descriptor : fieldDescriptor) {
+    void setValues(OperationParameters operationParameters) {
+        for (FieldDescriptor descriptor : operationParameters) {
             if (descriptor.isPrimitive()) {
                 descriptor.setValue(getRequestParameter(descriptor));
             } else {

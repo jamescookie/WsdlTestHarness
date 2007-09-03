@@ -13,10 +13,10 @@ public class FunctionalTest {
         List<String> names = serviceLocator.getOperationNames();
         Assert.assertEquals(4, names.size());
         for (String name : names) {
-            ComplexFieldDescriptor descriptor = serviceLocator.createFieldDescriptor(name);
-            descriptor.get(0).setValue("6");
-            descriptor.get(1).setValue("3");
-            String s = serviceLocator.invoke(name, descriptor);
+            OperationParameters parameters = serviceLocator.createOperationParameters(name);
+            parameters.get(0).setValue("6");
+            parameters.get(1).setValue("3");
+            String s = serviceLocator.invoke(name, parameters);
             if (name.equalsIgnoreCase("add")) {
                 Assert.assertTrue(s.contains("9"));
             } else if (name.equalsIgnoreCase("subtract")) {

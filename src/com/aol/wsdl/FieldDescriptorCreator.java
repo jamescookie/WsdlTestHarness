@@ -8,12 +8,12 @@ import javax.xml.namespace.QName;
 import java.util.Vector;
 
 public class FieldDescriptorCreator {
-    static ComplexFieldDescriptor createFieldDescriptors(Vector<Parameter> list) throws ClassNotFoundException {
-        ComplexFieldDescriptor returnParameters = new ComplexFieldDescriptor(null, null, 0, null);
+    static OperationParameters createOperationParameters(Vector<Parameter> list) throws ClassNotFoundException {
+        OperationParameters operationParameters = new OperationParameters();
         for (Parameter parameter : list) {
-            returnParameters.add(createFieldDescriptor("", parameter.getType(), parameter.getName(), parameter.getQName(), 0));
+            operationParameters.add(createFieldDescriptor("", parameter.getType(), parameter.getName(), parameter.getQName(), 0));
         }
-        return returnParameters;
+        return operationParameters;
     }
 
     static FieldDescriptor createFieldDescriptor(String nameUpToNow, TypeEntry typeEntry, String name, QName qName, int depth) throws ClassNotFoundException {
