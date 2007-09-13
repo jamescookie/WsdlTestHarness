@@ -11,7 +11,7 @@
     </path>
 
     <import file="resourceResolve.xml"/>
-    <import file="tomcat.xml"/>
+    <import file="${basedir}/../tomcat.xml"/>
     <import file="jetty.xml"/>
 
     <!--<target name="build.all" depends="clean, resolve">-->
