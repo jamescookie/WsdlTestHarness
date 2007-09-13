@@ -1,6 +1,7 @@
 package com.aol.wsdl;
 
 import org.apache.axis.wsdl.symbolTable.CollectionType;
+import org.apache.axis.wsdl.symbolTable.DefinedType;
 import org.apache.axis.wsdl.symbolTable.ElementDecl;
 import org.apache.axis.wsdl.symbolTable.Parameter;
 import org.apache.axis.wsdl.symbolTable.TypeEntry;
@@ -39,6 +40,8 @@ public class FieldDescriptorCreator {
             TypeEntry containedTypeEntry = containedElement.getType();
             if (containedTypeEntry instanceof CollectionType) {
                 innerDescriptor = createCollection(containedTypeEntry);
+            } else if (containedTypeEntry instanceof DefinedType) {
+                innerDescriptor = createDefinedType();
             } else {
                 innerDescriptor = createFieldDescriptor(
                         nameUpToNow,
@@ -52,6 +55,19 @@ public class FieldDescriptorCreator {
     }
 
     private static FieldDescriptor createCollection(TypeEntry typeEntry) {
+        QName qName = typeEntry.getQName();
+        String localPart = qName.getLocalPart();
+        localPart = localPart.substring(localPart.lastIndexOf('>') + 1, localPart.length());
+        String[] objects = localPart.split("[\\[,\\]]");
+        localPart = objects[0];
+        String min = objects[1];
+        String max = objects[2];
+
+
+        return null;
+    }
+
+    private static FieldDescriptor createDefinedType() {
         return null;
     }
 

@@ -12,6 +12,9 @@
             <p class="error">${error}</p>
         </#if>
         <p>
+            This website allows dynamic discovery and invocation of web services even those that use complex types.
+        </p>
+        <p>
             In the box above, type in the URL of the WSDL that you are interested in testing.
         </p>
         <p>
